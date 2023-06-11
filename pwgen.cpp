@@ -65,22 +65,22 @@ bool pwgen::process_command(int n, char* tokens[]) {
 // using palette conditions, generates valid symbols for desired password
 std::string pwgen::gen_password() const {
     int palette_size;
-    const char* palette = create_palette(&palette_size);
+    char* palette = create_palette(&palette_size);
     std::string output; output.resize(m_size);
     srandom(std::time(nullptr));
-    for (int i = 0; i < m_size; ++i) {
-        output[i] = palette[1 + (random() % palette_size)];
-    }
+    for (int i = 0; i < m_size; ++i)
+        output[i] = palette[random() % palette_size];
+    free(static_cast<void*>(palette));
     return output;
 }
 
-const char* pwgen::create_palette(int* size) const {
+char* pwgen::create_palette(int* size) const {
     *size = 0;
-    char* palette = static_cast<char*>(malloc(85));
-    if (m_conditions & (1u << 0)) { memcpy(palette + *size, "abcdefghijglmnopqrstuvwxyz", 26); *size += 26; }
-    if (m_conditions & (1u << 1)) { memcpy(palette + *size, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 26); *size += 26; }
-    if (m_conditions & (1u << 2)) { memcpy(palette + *size, "0123456789"                , 10); *size += 10; }
-    if (m_conditions & (1u << 3)) { memcpy(palette + *size, "!()-.?[]_`~;:@#$%^&*+="    , 23); *size += 23; }
+    char* palette = static_cast<char*>(malloc(88));
+    if (m_conditions & (1u << 0)) { memcpy(palette + *size, "abcdefghijklmnopqrstuvwxyz", 27); *size += 26; }
+    if (m_conditions & (1u << 1)) { memcpy(palette + *size, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 27); *size += 26; }
+    if (m_conditions & (1u << 2)) { memcpy(palette + *size, "0123456789"                , 11); *size += 10; }
+    if (m_conditions & (1u << 3)) { memcpy(palette + *size, "!()-.?[]_`~;:@#$%^&*+="    , 23); *size += 22; }
     return palette;
 }
 
@@ -94,5 +94,5 @@ void pwgen::print_help_message() {
         "\t-n\tlowercase - includes numbers in the generated password.\n"
         "\t-s\tlowercase - includes special characters in the generated password.\n"
         "LENGTH:\n"
-        "\tany integer ranging from 1 to 255 and denotes the length of the generated password.";
+        "\tany integer ranging from 0 to 255 and denotes the length of the generated password\n";
 }
