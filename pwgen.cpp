@@ -74,10 +74,11 @@ bool pwgen::process_command(int n, char* tokens[]) {
  * 
  * @return a randomly generated password under certain conditions
  */
-std::string pwgen::gen_password() const {
+char* pwgen::gen_password() const {
     int palette_size;
     char* palette = create_palette(&palette_size);
-    std::string output; output.resize(m_size);
+    char* output = static_cast<char*>(malloc(m_size + 1));
+    output[m_size] = '\0';
     srandom(std::time(nullptr));
     for (int i = 0; i < m_size; ++i)
         output[i] = palette[random() % palette_size];

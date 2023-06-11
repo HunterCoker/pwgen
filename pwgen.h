@@ -6,13 +6,11 @@
 #define PWGEN_H
 
 #include <iostream>
-#include <string>
-#include <vector>
 
 class pwgen {
 public:
     bool process_command(int n, char* tokens[]);
-    [[nodiscard]] std::string gen_password() const;
+    [[nodiscard]] char* gen_password() const;
 public:
     pwgen() :m_size(0), m_conditions(0) {}
     ~pwgen() = default;
@@ -22,6 +20,5 @@ private:
 private:
     uint8_t m_size, m_conditions;
 };
-
 
 #endif //PWGEN_H
