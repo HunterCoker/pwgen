@@ -63,7 +63,7 @@ bool pwgen::process_command(int n, char* tokens[]) {
             }
             j++;
         }
-        m_size = static_cast<uint8_t>(atoi(tokens[k]));
+        m_size = static_cast<uint8_t>(strtol(tokens[k], nullptr, 10));
     }
 
     return true;
@@ -102,8 +102,8 @@ void pwgen::print_help_message() {
         "OPTIONS:\n"
         "\t-l\tlowercase - includes lowercase letters in the generated password.\n"
         "\t-u\tuppercase - includes uppercase letters in the generated password.\n"
-        "\t-n\tlowercase - includes numbers in the generated password.\n"
-        "\t-s\tlowercase - includes special characters in the generated password.\n"
+        "\t-n\tnumbers   - includes numbers in the generated password.\n"
+        "\t-s\tspecial   - includes special characters in the generated password.\n"
         "LENGTH:\n"
         "\tany integer ranging from 0 to 255 and denotes the length of the generated password\n";
 }
