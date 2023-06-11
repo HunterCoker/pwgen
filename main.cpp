@@ -3,7 +3,6 @@
 pwgen generator;
 
 int main(int argc, char* argv[]) {
-
 #ifdef DEBUG
     int testc = 2;
     char* testv[2];
@@ -12,14 +11,10 @@ int main(int argc, char* argv[]) {
 
     if (!generator.process_command(testc, testv))
         return -1;
-
-    std::cout << generator.gen_password() << std::endl;
 #else
     if (!generator.process_command(argc, argv))
         return -1;
-
-    std::cout << generator.gen_password() << std::endl;
 #endif
-
+    std::cout << generator.gen_password() << std::endl;
     return 0;
 }
