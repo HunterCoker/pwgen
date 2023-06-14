@@ -79,9 +79,9 @@ char* pwgen::gen_password() const {
     char* palette = create_palette(&palette_size);
     char* output = static_cast<char*>(malloc(m_size + 1));
     output[m_size] = '\0';
-    srandom(std::time(nullptr));
+    srand(std::time(nullptr));
     for (int i = 0; i < m_size; ++i)
-        output[i] = palette[random() % palette_size];
+        output[i] = palette[rand() % palette_size];
     free(static_cast<void*>(palette));
     return output;
 }
